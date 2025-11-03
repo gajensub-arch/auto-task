@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Auto Task Planner</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>Auto Task Planner</h1>
+    <p class="subtitle">Organise your work with a lightweight, offline-first task board.</p>
+  </header>
+
+  <main class="layout">
+    <section class="panel" aria-labelledby="create-task-heading">
+      <h2 id="create-task-heading">Create a task</h2>
+      <form id="task-form" class="task-form" novalidate>
+        <div class="field">
+          <label for="title">Title <span aria-hidden="true">*</span></label>
+          <input id="title" name="title" type="text" required maxlength="80" placeholder="Design homepage hero" />
+          <p class="field-help" id="title-help">Give your task a short descriptive name.</p>
+        </div>
+
+        <div class="field">
+          <label for="description">Description</label>
+          <textarea id="description" name="description" rows="3" maxlength="400" placeholder="Add notes, links, or acceptance criteria"></textarea>
+        </div>
+
+        <div class="field-group">
+          <div class="field">
+            <label for="due-date">Due date</label>
+            <input id="due-date" name="due-date" type="date" />
+          </div>
+
+          <div class="field">
+            <label for="priority">Priority</label>
+            <select id="priority" name="priority">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" class="primary">Add task</button>
+      </form>
+    </section>
+
+    <section class="panel" aria-labelledby="tasks-heading">
+      <div class="panel-header">
+        <div>
+          <h2 id="tasks-heading">Your tasks</h2>
+          <p class="panel-description">Tap a card to toggle completion or use the actions on the right.</p>
+        </div>
+        <div class="filters" role="group" aria-label="Task filters">
+          <button class="filter-button active" data-filter="all">All</button>
+          <button class="filter-button" data-filter="open">Open</button>
+          <button class="filter-button" data-filter="completed">Completed</button>
+        </div>
+      </div>
+
+      <ul id="task-list" class="task-list" aria-live="polite"></ul>
+
+      <p id="empty-state" class="empty-state" hidden>
+        No tasks yet. Add your first task to get started!
+      </p>
+    </section>
+  </main>
+
+  <template id="task-template">
+    <li class="task-card" data-id="">
+      <button class="task-toggle" type="button" aria-pressed="false">
+        <span class="checkmark" aria-hidden="true">✓</span>
+        <span class="task-content">
+          <span class="task-title"></span>
+          <span class="task-meta"></span>
+          <span class="task-description"></span>
+        </span>
+      </button>
+      <div class="task-actions">
+        <button class="secondary small task-edit" type="button">Edit</button>
+        <button class="danger small task-delete" type="button">Delete</button>
+      </div>
+    </li>
+  </template>
+
+  <dialog id="edit-dialog" aria-labelledby="edit-task-heading">
+    <form method="dialog" id="edit-form">
+      <h2 id="edit-task-heading">Edit task</h2>
+      <input type="hidden" id="edit-id" name="id" />
+      <div class="field">
+        <label for="edit-title">Title <span aria-hidden="true">*</span></label>
+        <input id="edit-title" name="title" type="text" required maxlength="80" />
+      </div>
+      <div class="field">
+        <label for="edit-description">Description</label>
+        <textarea id="edit-description" name="description" rows="3" maxlength="400"></textarea>
+      </div>
+      <div class="field-group">
+        <div class="field">
+          <label for="edit-due-date">Due date</label>
+          <input id="edit-due-date" name="due-date" type="date" />
+        </div>
+        <div class="field">
+          <label for="edit-priority">Priority</label>
+          <select id="edit-priority" name="priority">
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+        </div>
+      </div>
+      <menu class="dialog-actions">
+        <button value="cancel" type="reset" class="secondary">Cancel</button>
+        <button value="save" class="primary">Save changes</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <script src="script.js" type="module"></script>
+</body>
+</html>
